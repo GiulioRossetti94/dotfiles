@@ -21,6 +21,11 @@ alias la="ls -A" 					#list all
 alias df='df -h'                          		# human-readable sizes
 alias config='/usr/bin/git --git-dir=/Users/giulio/dotfiles/ --work-tree=/Users/giulio'
 
+# Interactive operation...
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
 
 #-----------
 #pyenv settings
