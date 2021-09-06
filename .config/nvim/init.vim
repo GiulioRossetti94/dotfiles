@@ -18,7 +18,8 @@ Plugin 'itchyny/lightline.vim' 		"lightline
 Plugin 'tpope/vim-fugitive' 		"fugitive, git plugin
 Plugin 'scrooloose/nerdtree' 		"Nerdtree
 Plugin 'ryanoasis/vim-devicons' 	"icons nerdtree
-
+Plugin 'skywind3000/asyncrun.vim'   "run terminal commands in vim 
+Plugin 'SirVer/ultisnips'           "code snippets  
 
 "Plugin 'daeyun/vim-matlab' 		"matlab editor in nvim it doesn work
 
@@ -50,6 +51,8 @@ let g:python_host_prog = "/Users/giulio/.pyenv/versions/neovim2/bin/python"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Status Line
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+autocmd VimEnter * call lightline#update()      "solve problem nerdtree lightline not showing up 
 
 let g:lightline = {
       \ 'colorcheme': 'materia',
