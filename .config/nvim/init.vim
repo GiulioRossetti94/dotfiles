@@ -49,6 +49,7 @@ syntax enable
 
 let g:python3_host_prog = "/opt/anaconda3/bin/python3"
 let g:python_host_prog = "/Users/giulio/.pyenv/versions/neovim2/bin/python"
+let g:tex_flavor = "latex"      " set tex type so that no plaintex.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Status Line
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -76,7 +77,7 @@ endif
 let g:UltiSnipsExpandTrigger="<C-t>"
 let g:UltiSnipsJumpForwardTrigger="<C-f>"
 let g:UltiSnipsJumpBackwardTrigger="<C-b>"
-
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]  "custom snippets
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Remap Keys
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
