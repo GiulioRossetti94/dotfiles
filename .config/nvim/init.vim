@@ -13,13 +13,14 @@ set rtp+=~/.config/nvim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim' 		"required
-Plugin 'ajh17/VimCompletesMe' 		"vim autocompletion
+Plugin 'ajh17/VimCompletesMe' 		"vim autocompletion 
 Plugin 'itchyny/lightline.vim' 		"lightline
 Plugin 'tpope/vim-fugitive' 		"fugitive, git plugin
 Plugin 'scrooloose/nerdtree' 		"Nerdtree
 Plugin 'ryanoasis/vim-devicons' 	"icons nerdtree
 Plugin 'skywind3000/asyncrun.vim'   "run terminal commands in vim 
 Plugin 'SirVer/ultisnips'           "code snippets  
+Plugin 'honza/vim-snippets'         "lets try these snippets firts dont need most of them
 
 "Plugin 'daeyun/vim-matlab' 		"matlab editor in nvim it doesn work
 
@@ -52,7 +53,6 @@ let g:python_host_prog = "/Users/giulio/.pyenv/versions/neovim2/bin/python"
 " => Status Line
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-autocmd VimEnter * call lightline#update()      "solve problem nerdtree lightline not showing up 
 
 let g:lightline = {
       \ 'colorcheme': 'materia',
@@ -69,6 +69,13 @@ set laststatus=2 "always show statuslline
 if !has('gui_running')
   set t_Co=256
 endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Utilsnip settings: how to trigger snippets
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:UltiSnipsExpandTrigger="<C-t>"
+let g:UltiSnipsJumpForwardTrigger="<C-f>"
+let g:UltiSnipsJumpBackwardTrigger="<C-b>"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Remap Keys
