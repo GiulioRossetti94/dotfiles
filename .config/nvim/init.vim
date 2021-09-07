@@ -44,9 +44,13 @@ set shiftwidth=4                " One tab == four spaces.
 set tabstop=4                   " One tab == four spaces.
 
 
+"show Unicode symbols in normal mode
+set conceallevel=2
+set concealcursor=nvc
+let g:tex_conceal="adgms"
+
 
 syntax enable
-
 let g:python3_host_prog = "/opt/anaconda3/bin/python3"
 let g:python_host_prog = "/Users/giulio/.pyenv/versions/neovim2/bin/python"
 let g:tex_flavor = "latex"      " set tex type so that no plaintex.
@@ -85,6 +89,8 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]  "custom snippets
 :imap ii <Esc>
 
 
+autocmd FileType tex nmap <buffer> <C-T> :!latexmk -pdf -pv %<CR>   
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Splits 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -114,6 +120,20 @@ map <Leader>tk <C-w>t<C-w>K
 
 autocmd VimEnter * NERDTree | wincmd p      " Start NERDTree and put the cursor back in the other window
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif   " Exit Vim if NERDTree is the only window remaining in the only tab.
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Insert skeletons in new files. 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Skeleton for .tex files
+augroup ruby
+    " Remove all existing autocommands in the group
+    au!
+    au BufNewFile *.tex 0r ~/.vim/templates/skeleton.tex
+augroup end
+
+
 
 
 set guifont=SauceCodePro\ Nerd\ Font:h15
