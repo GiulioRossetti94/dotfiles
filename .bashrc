@@ -27,6 +27,17 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+
+### create folders for new project. usage: newproject <name_project>
+
+
+newproject ()
+{
+    mkdir -p -- "$1"/code/{python,matlab,other}
+    mkdir -p -- "$1"/{data,literature,putput,tables}
+}
+
+
 #-----------
 #pyenv settings
 #-----------
