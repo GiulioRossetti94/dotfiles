@@ -1,10 +1,14 @@
 ### EXPORT
-export TERM="xterm-256color"                     
 export CLICOLOR=1
+export TERM="xterm-256color"                     
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
-#PS1 show prompt
+#manage command history
+export HISTSIZE=10000                                   #big history
+export HISTCONTROL=ignoredups:erasedups                 #no duplicate entries
+export HISTIGNORE="&:[ ]*:exit:ls:history:clear"  #ignore some commands in hist
 
+#PS1 show prompt
 PS1='\u@\h \W\$ '
 export PS1;
 
@@ -19,6 +23,9 @@ alias odphd="open /Users/giulio/Dropbox/projects" 	#open dropbox folder in finde
 alias vim="nvim" 					#using neovim
 alias la="ls -A" 					#list all
 alias df='df -h'                          		# human-readable sizes
+alias home='cd ~'
+
+# bare git repo alias for dotfiles
 alias config='/usr/bin/git --git-dir=/Users/giulio/dotfiles/ --work-tree=/Users/giulio'
 
 # Interactive operation...
@@ -26,17 +33,6 @@ alias config='/usr/bin/git --git-dir=/Users/giulio/dotfiles/ --work-tree=/Users/
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-
-
-### create folders for new project. usage: newproject <name_project>
-
-
-newproject ()
-{
-    mkdir -p -- "$1"/code/{python,matlab,other}
-    mkdir -p -- "$1"/{data,literature,putput,tables}
-}
-
 
 #-----------
 #pyenv settings
@@ -71,3 +67,21 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+
+##########################
+#  USELFUL FUNCTIONS :)  #
+##########################
+
+### create folders for new project. usage: newproject <name_project>
+newproject ()
+{
+    mkdir -p -- "$1"/code/{python,matlab,other}
+    mkdir -p -- "$1"/{data,literature,putput,tables}
+}
+
+###preview csv files in terminal
+function csvpreview()
+{
+      sed 's/,,/, ,/g;s/,,/, ,/g' "$@" | column -s, -t | less -#2 -N -S
+}

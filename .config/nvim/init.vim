@@ -34,8 +34,9 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set clipboard=unnamedplus       " Copy/paste between vim and other programs.
 set number relativenumber       " Display line numbers
-set title                       " set terminal title to current file name and path
-set noshowmode 			" Remove insert line because already in statusline
+set title                       " Set terminal title to current file name and path
+set noshowmode 			        " Remove insert line because already in statusline
+set mouse=a                     " Allow mouse
 
 "#tabs indentds...
 set expandtab                   " Use spaces instead of tabs.
@@ -88,7 +89,7 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]  "custom snippets
 " Remap ESC to ii
 :imap ii <Esc>
 
-
+"Ctrl + shift + t to compile a tex file
 autocmd FileType tex nmap <buffer> <C-T> :!latexmk -pdf -pv %<CR>   
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -127,13 +128,14 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Skeleton for .tex files
-augroup ruby
-    " Remove all existing autocommands in the group
-    au!
-    au BufNewFile *.tex 0r ~/.vim/templates/skeleton.tex
-augroup end
+"augroup ruby
+"    " Remove all existing autocommands in the group
+"    au!
+"    au BufNewFile *.tex 0r ~/.vim/templates/skeleton.tex
+"augroup end
 
-
+"space t for tex file put template in it
+nnoremap <space>t :-1read $HOME/.vim/templates/skeleton.tex<CR>/{<CR>o
 
 
 set guifont=SauceCodePro\ Nerd\ Font:h15
