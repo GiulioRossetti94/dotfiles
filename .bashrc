@@ -68,20 +68,42 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+export PATH="/opt/shell-color-scripts:$PATH"
+### RANDOM COLOR SCRIPT ###
+colorscript.sh random
 
 ##########################
 #  USELFUL FUNCTIONS :)  #
 ##########################
 
 ### create folders for new project. usage: newproject <name_project>
+#-----------------------------------------------------------------------------
 newproject ()
+
 {
-    mkdir -p -- "$1"/code/{python,matlab,other}
-    mkdir -p -- "$1"/{data,literature,putput,tables}
+    mkdir -pv -- "$1"/code/{python,matlab,other}
+    mkdir -pv -- "$1"/{data,literature,putput,tables}
 }
+#-----------------------------------------------------------------------------
 
 ###preview csv files in terminal
+#-----------------------------------------------------------------------------
 function csvpreview()
 {
       sed 's/,,/, ,/g;s/,,/, ,/g' "$@" | column -s, -t | less -#2 -N -S
 }
+
+#-----------------------------------------------------------------------------
+
+###create a folder for new presentation with preable and bib file
+#-----------------------------------------------------------------------------
+newpresentation ()
+{
+    #create the folder for the presentation with format
+    #slides_ddmmyy and put preamble and bib files in it
+    mkdir -p -- slides_$(date +"%d-%m-%Y")&& \
+        cp ~/my_templates/latex-slides/{preamble.tex,references.bib} "$_"
+    #create folder for auxiliary files
+    mkdir -p -- slides_$(date +"%d-%m-%Y")/aux
+}
+#-----------------------------------------------------------------------------
