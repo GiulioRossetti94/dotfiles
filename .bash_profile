@@ -19,6 +19,6 @@ source .bash_prompt
 
 # Load our dotfiles like ~/.bash_prompt, etc…
 #   Use it to configure your PATH, thus it being first in line.
-#for file in ~/.{bash_prompt}; do
-#    [ -r "$file" ] && source "$file"
-#done
+for file in ~/.{functions}; do
+    [ -r "$file" ] && source "$file"
+done
