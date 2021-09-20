@@ -2,7 +2,8 @@
 export CLICOLOR=1
 export TERM="xterm-256color"                     
 export LSCOLORS=GxFxCxDxBxegedabagaced
-
+#path colorscheme
+export PATH="/opt/shell-color-scripts:$PATH"
 #manage command history
 export HISTSIZE=10000                                   #big history
 export HISTCONTROL=ignoredups:erasedups                 #no duplicate entries
@@ -24,7 +25,7 @@ alias vim="nvim" 					#using neovim
 alias la="ls -A" 					#list all
 alias df='df -h'                          		# human-readable sizes
 alias home='cd ~'
-
+alias color='colorscript.sh random'
 # bare git repo alias for dotfiles
 alias config='/usr/bin/git --git-dir=/Users/giulio/dotfiles/ --work-tree=/Users/giulio'
 
@@ -68,7 +69,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export PATH="/opt/shell-color-scripts:$PATH"
 ### RANDOM COLOR SCRIPT ###
 colorscript.sh random
 
@@ -107,3 +107,28 @@ newpresentation ()
     mkdir -p -- slides_$(date +"%d-%m-%Y")/aux
 }
 #-----------------------------------------------------------------------------
+
+###show snippets for tex and all
+#-----------------------------------------------------------------------------
+
+th ()
+{
+    #print snippets command for latex, default and custom made
+    echo "======================="
+    echo "#snippet vim-snippet"
+    echo "======================="
+    gsed -n '/^#snippet/p;/^snippet/p' ~/.vim/bundle/vim-snippets/UltiSnips/tex.snippets ~/.config/nvim/my_snippets/tex.snippets | \
+        gsed -e "/#snippet custom made/a =======================" | \
+        gsed -e "/#snippet custom made/i ======================="
+
+}
+
+ah ()
+{
+    #print snippets command for all, default and custom made
+    echo "======================="
+    echo "#snippet vim-snippet: all"
+    echo "======================="
+    gsed -n '/^#snippet/p;/^snippet/p' ~/.vim/bundle/vim-snippets/UltiSnips/all.snippets 
+}
+
