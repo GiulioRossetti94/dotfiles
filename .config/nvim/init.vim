@@ -21,6 +21,7 @@ Plugin 'ryanoasis/vim-devicons' 	"icons nerdtree
 Plugin 'skywind3000/asyncrun.vim'   "run terminal commands in vim 
 Plugin 'SirVer/ultisnips'           "code snippets  
 Plugin 'honza/vim-snippets'         "lets try these snippets firts dont need most of them
+Plugin 'lervag/vimtex'              "latex plugin
 
 "Plugin 'daeyun/vim-matlab' 		"matlab editor in nvim it doesn work
 
@@ -44,11 +45,13 @@ set smarttab                    " Be smart using tabs ;)
 set shiftwidth=4                " One tab == four spaces.
 set tabstop=4                   " One tab == four spaces.
 
+"set spell check only on tex file
+"spell check
+"setlocal spell
+"set spelllang =en,it
+"spell check: Ctrl+l correct previous spelling mistake
+"inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
-"show Unicode symbols in normal mode
-set conceallevel=2
-set concealcursor=nvc
-let g:tex_conceal="adgms"
 
 
 syntax enable
@@ -79,9 +82,12 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Utilsnip settings: how to trigger snippets
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:UltiSnipsExpandTrigger="<C-t>"
-let g:UltiSnipsJumpForwardTrigger="<C-f>"
-let g:UltiSnipsJumpBackwardTrigger="<C-b>"
+"let g:UltiSnipsExpandTrigger="<C-t>"
+"let g:UltiSnipsJumpForwardTrigger="<C-f>"
+"let g:UltiSnipsJumpBackwardTrigger="<C-b>"
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]  "custom snippets
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Remap Keys
@@ -89,8 +95,6 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]  "custom snippets
 " Remap ESC to ii
 :imap ii <Esc>
 
-"Ctrl + shift + t to compile a tex file
-autocmd FileType tex nmap <buffer> <C-T> :!latexmk -pdf -pv %<CR>   
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Splits 
@@ -119,23 +123,57 @@ map <Leader>tk <C-w>t<C-w>K
 " => Nerdtreee options 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+",n to open nerdtree
+map ,n :NERDTreeToggle<CR>
 autocmd VimEnter * NERDTree | wincmd p      " Start NERDTree and put the cursor back in the other window
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif   " Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif   " Exit Vim if NERDTree is the only window remaining in the only tab.
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Insert skeletons in new files. 
+" => Latex specific settings  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Skeleton for .tex files
-"augroup ruby
-"    " Remove all existing autocommands in the group
-"    au!
-"    au BufNewFile *.tex 0r ~/.vim/templates/skeleton.tex
-"augroup end
+"show Unicode symbols in normal mode
+
+"set conceallevel=1
+"set concealcursor=nvc
+"let g:tex_conceal="adgms"
+let g:vimtex_view_method='skim'
+"let g:Tex_ViewRule_pdf = 'skim'
+
 
 "space t for tex file put template in it
 nnoremap <space>t :-1read $HOME/.vim/templates/skeleton.tex<CR>/{<CR>o
 
+"Ctrl + shift + t to compile a tex file
+autocmd FileType tex nmap <buffer> <C-T> :!latexmk -pdf -pv %<CR>   
+
+"inverse search for nvim and skim 
+"https://jdhao.github.io/2021/02/20/inverse_search_setup_neovim_vimtex/
+
+function! SetServerName()
+  if has('win32')
+    let nvim_server_file = $TEMP . "/curnvimserver.txt"
+  else
+    let nvim_server_file = "/tmp/curnvimserver.txt"
+  endif
+  let cmd = printf("echo %s > %s", v:servername, nvim_server_file)
+  call system(cmd)
+endfunction
+
+augroup vimtex_common
+    autocmd!
+    autocmd FileType tex call SetServerName()
+augroup END
+"insert a tab or expands autocompletion according to the context
+function! Tab_Or_Complete()
+    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+        return "\<C-N>"
+    else
+        return "\<Tab>"
+    endif
+endfunction
+:inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 
 set guifont=SauceCodePro\ Nerd\ Font:h15
