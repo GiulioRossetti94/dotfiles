@@ -11,7 +11,7 @@ if [ -r ~/.bashrc ]; then
 fi
 
 source .bash_prompt
-
+source .functions
 #check if bash_prompt
 #if [ -r ~/.bash_prompt ]; then
 #    source ~/.bash_prompt
