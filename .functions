@@ -58,3 +58,16 @@ ah ()
     echo "======================="
     gsed -n '/^#snippet/p;/^snippet/p' ~/.vim/bundle/vim-snippets/UltiSnips/all.snippets 
 }
+
+
+jh ()
+{
+    #print snippets command for latex, default and custom made
+    echo "======================="
+    echo "#snippet vim-snippet"
+    echo "======================="
+    gsed -n '/^#snippet/p;/^snippet/p' ~/.vim/bundle/vim-snippets/UltiSnips/julia.snippets ~/.config/nvim/my_snippets/julia.snippets | \
+        gsed -e "/#snippet custom made/a =======================" | \
+        gsed -e "/#snippet custom made/i ======================="
+
+}
