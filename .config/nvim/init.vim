@@ -23,7 +23,7 @@ Plugin 'SirVer/ultisnips'           "code snippets
 Plugin 'honza/vim-snippets'         "lets try these snippets firts dont need most of them
 Plugin 'lervag/vimtex'              "latex plugin
 
-"Plugin 'daeyun/vim-matlab' 		"matlab editor in nvim it doesn work
+Plugin 'daeyun/vim-matlab' 		"matlab editor in nvim it doesn work
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -94,6 +94,15 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]  "custom snippets
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remap ESC to ii
 :imap ii <Esc>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => running commands
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType python map <buffer> <F9> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <F9> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+
+autocmd FileType julia map <buffer> <F9> :w<CR>:exec '!julia' shellescape(@%, 1)<CR>
+autocmd FileType julia imap <buffer> <F9> <esc>:w<CR>:exec '!julia' shellescape(@%, 1)<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
