@@ -1,5 +1,4 @@
 
-
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -25,10 +24,22 @@ Plugin 'lervag/vimtex'              "latex plugin
 
 Plugin 'daeyun/vim-matlab' 		"matlab editor in nvim it doesn work
 
+"lua autocompletion
+
+Plugin 'neovim/nvim-lspconfig'
+Plugin 'hrsh7th/cmp-nvim-lsp'
+Plugin 'hrsh7th/cmp-buffer'
+Plugin 'hrsh7th/cmp-path'
+Plugin 'hrsh7th/cmp-cmdline'
+Plugin 'hrsh7th/nvim-cmp'
+Plugin 'quangnguyen30192/cmp-nvim-ultisnips'
+
+
 " All of your Plugins must be added before the following line
 call vundle#end()
 
 filetype plugin indent on    " required
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General Settings
@@ -85,9 +96,9 @@ endif
 "let g:UltiSnipsExpandTrigger="<C-t>"
 "let g:UltiSnipsJumpForwardTrigger="<C-f>"
 "let g:UltiSnipsJumpBackwardTrigger="<C-b>"
-let g:UltiSnipsExpandTrigger = '<tab>'
-let g:UltiSnipsJumpForwardTrigger = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-h>'
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]  "custom snippets
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Remap Keys
@@ -112,10 +123,10 @@ set splitbelow splitright
 
 "remap navigate btw splits with Ctrl hjkl
 
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <s-h> <C-w>h
+nnoremap <s-j> <C-w>j
+nnoremap <s-k> <C-w>k
+nnoremap <s-l> <C-w>l
 
 " resizing splits with ctrl + shift + arrow  
 noremap <silent> <C-S-Left> :vertical resize +3<CR>
@@ -134,7 +145,7 @@ map <Leader>tk <C-w>t<C-w>K
 
 ",n to open nerdtree
 map ,n :NERDTreeToggle<CR>
-autocmd VimEnter * NERDTree | wincmd p      " Start NERDTree and put the cursor back in the other window
+"autocmd VimEnter * NERDTree | wincmd p      " Start NERDTree and put the cursor back in the other window
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif   " Exit Vim if NERDTree is the only window remaining in the only tab.
 
@@ -186,3 +197,10 @@ endfunction
 :inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 
 set guifont=SauceCodePro\ Nerd\ Font:h15
+
+
+""""""""""""""""""""""""""""""""""""""
+"  LUA setup lets try if it works
+""""""""""""""""""""""""""""""""""""""
+lua require('basic')
+lua require('init')
