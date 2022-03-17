@@ -2,6 +2,9 @@
 
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+------------------------------------------------------------------------
+--                             lsp config                             --
+------------------------------------------------------------------------
 
 require'lspconfig'.pyright.setup{
     capabilities = capabilities,
@@ -19,12 +22,8 @@ vim.opt.completeopt={"menu","menuone","noselect"}
   local cmp = require'cmp'
   cmp.setup({
     snippet = {
-      -- REQUIRED - you must specify a snippet engine
       expand = function(args)
-       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-         vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
       end,
     },
     mapping = {
@@ -40,10 +39,7 @@ vim.opt.completeopt={"menu","menuone","noselect"}
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      --{ name = 'vsnip' }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
       { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
     }, {
       { name = 'buffer' },
     })
@@ -74,12 +70,35 @@ vim.opt.completeopt={"menu","menuone","noselect"}
     })
   })
 
+------------------------------------------------------------------------
+--                          Telescope config                          --
+------------------------------------------------------------------------
+local action_state = require('telescope.actions.state')
+require("telescope").setup {
+    defaults = {
+        prompt_prefix = "$ ",
+        mappings = {
+            i = {
+                ["<c-a>"] = function() print(vim.inspect(action_state.get_selected_entry())) end
+                }   
+        }
+    }
+}
 
+local mappings = {
 
+}
 
------------
---  old  --
------------
+mappings.curr_buf = function()
+    --local opt = require('telescope.themes').get_ivy({height = 10, previewer =false,winblend = 10})
+    local opt = require('telescope.themes').get_dropdown({winblend=10})
+    require('telescope.builtin').current_buffer_fuzzy_find(opt)
+end
+return mappings
+------------------------------------------------------------------------
+--                            Old things
+------------------------------------------------------------------------
+
 --local sumneko_binary_path = vim.fn.exepath('lua-language-server')
 --local sumneko_root_path = vim.fn.fnamemodify(sumneko_binary_path, ':h:h:h')
 --

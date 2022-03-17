@@ -21,16 +21,20 @@ Plugin 'skywind3000/asyncrun.vim'   "run terminal commands in vim
 Plugin 'SirVer/ultisnips'           "code snippets  
 Plugin 'honza/vim-snippets'         "lets try these snippets firts dont need most of them
 Plugin 'lervag/vimtex'              "latex plugin
+"Plugin 'daeyun/vim-matlab' 		"matlab editor in nvim it doesn work
 
-Plugin 'daeyun/vim-matlab' 		"matlab editor in nvim it doesn work
-
+"telescope: fuzzy finder
+Plugin 'nvim-lua/popup.nvim'
+Plugin 'nvim-lua/plenary.nvim'
+Plugin 'nvim-lua/telescope.nvim'
+Plugin 'kyazdani42/nvim-web-devicons'  "icons for telescope
 "lua autocompletion
 
 Plugin 'neovim/nvim-lspconfig'
 Plugin 'hrsh7th/cmp-nvim-lsp'
 Plugin 'hrsh7th/cmp-buffer'
 Plugin 'hrsh7th/cmp-path'
-Plugin 'hrsh7th/cmp-cmdline'
+"Plugin 'hrsh7th/cmp-cmdline'
 Plugin 'hrsh7th/nvim-cmp'
 Plugin 'quangnguyen30192/cmp-nvim-ultisnips'
 
@@ -49,13 +53,13 @@ set number relativenumber       " Display line numbers
 set title                       " Set terminal title to current file name and path
 set noshowmode 			        " Remove insert line because already in statusline
 set mouse=a                     " Allow mouse
-
 "#tabs indentds...
 set expandtab                   " Use spaces instead of tabs.
 set smarttab                    " Be smart using tabs ;)
 set shiftwidth=4                " One tab == four spaces.
 set tabstop=4                   " One tab == four spaces.
 
+let mapleader=","
 "set spell check only on tex file
 "spell check
 "setlocal spell
@@ -105,7 +109,8 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]  "custom snippets
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remap ESC to ii
 :imap ii <Esc>
-
+" Remove whitespace
+nnoremap <leader>sws :%s/\s\+$//<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => running commands
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -202,5 +207,21 @@ set guifont=SauceCodePro\ Nerd\ Font:h15
 """"""""""""""""""""""""""""""""""""""
 "  LUA setup lets try if it works
 """"""""""""""""""""""""""""""""""""""
-lua require('basic')
+"lua require('basic')  "example. call lua fila and print something every time
+"it is reloaded
 lua require('init')
+
+"remap for telescope
+
+"ctrl / for telescope find
+"nnoremap <C-_> :Telescope current_buffer_fuzzy_find sorting_strategy=ascending prompt_position=top <cr> 
+"nnoremap <C-_> <cmd> lua require('telescope.builtin').current_buffer_fuzzy_find({sorting_strategy="ascending", prompt_position="top"}) <cr>
+"nnoremap <C-_> <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find({sorting_strategy="ascending", prompt_position="top"})<cr>
+"nnoremap <C-_> <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_ivy({sorting="ascending",prompt_position="bottom"}))<cr>
+
+nnoremap <C-_> <cmd>lua require("init").curr_buf() <cr>
+nnoremap <F4> :lua package.loaded.init = nil <cr>:source ~/.config/nvim/init.vim <cr>
+
+
+
+
