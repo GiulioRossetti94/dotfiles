@@ -10,8 +10,9 @@ if [ -r ~/.bashrc ]; then
    source ~/.bashrc
 fi
 
-source .bash_prompt
-source .functions
+source ~/.bash_prompt
+source ~/.functions
+
 #check if bash_prompt
 #if [ -r ~/.bash_prompt ]; then
 #    source ~/.bash_prompt

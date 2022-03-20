@@ -17,7 +17,10 @@ export PS1;
 #-----------
 #aliases
 #-----------
-alias dphd="cd /Users/giulio/Dropbox/projects" 		#go to progect folder in dropbox
+alias dphd="cd /Users/giulio/Dropbox/projects" 		#go to project folder in dropbox
+alias JJ="cd /Users/giulio/Dropbox/journal" 		#go to journal
+alias DW="cd /Users/giulio/Downloads" 		#go to progect folder in dropbox
+alias DE="cd /Users/giulio/Desktop" 		#go to progect folder in dropbox
 alias clc="clear" 					#clear terminal screen
 alias o="open ." 					#open currend directory in finder
 alias odphd="open /Users/giulio/Dropbox/projects" 	#open dropbox folder in finder
@@ -72,3 +75,5 @@ unset __conda_setup
 ### RANDOM COLOR SCRIPT ###
 colorscript.sh random
 
+
+alias luamake=/Users/giulio/tools/lua-language-server/3rd/luamake/luamake
