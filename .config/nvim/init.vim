@@ -221,7 +221,7 @@ lua require('init')
 
 nnoremap <C-_> <cmd>lua require("init").curr_buf() <cr>
 nnoremap <F4> :lua package.loaded.init = nil <cr>:source ~/.config/nvim/init.vim <cr>
-
+nnoremap <leader>ff :Telescope find_files<cr>
 
 
 
