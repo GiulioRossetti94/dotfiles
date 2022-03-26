@@ -38,6 +38,8 @@ Plugin 'hrsh7th/cmp-path'
 Plugin 'hrsh7th/nvim-cmp'
 Plugin 'quangnguyen30192/cmp-nvim-ultisnips'
 
+"neovim color plugin
+Plugin 'rebelot/kanagawa.nvim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -111,6 +113,10 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]  "custom snippets
 :imap ii <Esc>
 " Remove whitespace
 nnoremap <leader>sws :%s/\s\+$//<CR>
+"write only if something is changed
+noremap <leader>w :up<cr>
+"serach and replace in visual mode
+vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => running commands
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -127,7 +133,6 @@ autocmd FileType julia imap <buffer> <F9> <esc>:w<CR>:exec '!julia' shellescape(
 set splitbelow splitright
 
 "remap navigate btw splits with Ctrl hjkl
-
 nnoremap <s-h> <C-w>h
 nnoremap <s-j> <C-w>j
 nnoremap <s-k> <C-w>k
@@ -143,6 +148,9 @@ noremap <silent> <C-S-Down> :resize -3<CR>
 map <Leader>th <C-w>t<C-w>H
 map <Leader>tk <C-w>t<C-w>K
 
+"vertical and horizontal splits
+noremap vs :vsplit
+noremap hs :split
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerdtreee options 
@@ -187,6 +195,7 @@ function! SetServerName()
   call system(cmd)
 endfunction
 
+
 augroup vimtex_common
     autocmd!
     autocmd FileType tex call SetServerName()
@@ -199,11 +208,12 @@ function! Tab_Or_Complete()
         return "\<Tab>"
     endif
 endfunction
+
 :inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 
 set guifont=SauceCodePro\ Nerd\ Font:h15
 
-
+colorscheme kanagawa
 """"""""""""""""""""""""""""""""""""""
 "  LUA setup lets try if it works
 """"""""""""""""""""""""""""""""""""""
