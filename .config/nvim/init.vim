@@ -39,7 +39,7 @@ Plugin 'hrsh7th/nvim-cmp'
 Plugin 'quangnguyen30192/cmp-nvim-ultisnips'
 
 "neovim color plugin
-Plugin 'rebelot/kanagawa.nvim'
+"Plugin 'rebelot/kanagawa.nvim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -213,7 +213,7 @@ endfunction
 
 set guifont=SauceCodePro\ Nerd\ Font:h15
 
-colorscheme kanagawa
+"colorscheme kanagawa
 """"""""""""""""""""""""""""""""""""""
 "  LUA setup lets try if it works
 """"""""""""""""""""""""""""""""""""""
