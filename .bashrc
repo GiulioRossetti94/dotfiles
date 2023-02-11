@@ -29,6 +29,9 @@ alias la="ls -A" 					#list all
 alias df='df -h'                          		# human-readable sizes
 alias home='cd ~'
 alias color='colorscript.sh random'
+alias bib="cd /Users/giulio/Dropbox/bibmaster" # go to bib master folder in dropbox
+alias cbib="nvim /Users/giulio/Dropbox/bibmaster/mybibfile.bib" # modify bibmaster file
+alias OO="cd /Users/giulio/Phd/GiuliosVault"  # go to obsidian vault
 # bare git repo alias for dotfiles
 alias config='/usr/bin/git --git-dir=/Users/giulio/dotfiles/ --work-tree=/Users/giulio'
 

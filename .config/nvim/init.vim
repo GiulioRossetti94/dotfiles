@@ -14,15 +14,17 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' 		"required
 Plugin 'ajh17/VimCompletesMe' 		"vim autocompletion 
 Plugin 'itchyny/lightline.vim' 		"lightline
-Plugin 'tpope/vim-fugitive' 		"fugitive, git plugin
 Plugin 'scrooloose/nerdtree' 		"Nerdtree
 Plugin 'ryanoasis/vim-devicons' 	"icons nerdtree
 Plugin 'skywind3000/asyncrun.vim'   "run terminal commands in vim 
 Plugin 'SirVer/ultisnips'           "code snippets  
 Plugin 'honza/vim-snippets'         "lets try these snippets firts dont need most of them
 Plugin 'lervag/vimtex'              "latex plugin
-"Plugin 'daeyun/vim-matlab' 		"matlab editor in nvim it doesn work
+Plugin 'numToStr/Comment'           " 'gc' to comment visual region/lines
 
+" Git plugins
+Plugin 'tpope/vim-fugitive' 		"fugitive, git plugin
+Plugin 'tpope/vim-rhubarb'
 "telescope: fuzzy finder
 Plugin 'nvim-lua/popup.nvim'
 Plugin 'nvim-lua/plenary.nvim'
@@ -60,6 +62,7 @@ set expandtab                   " Use spaces instead of tabs.
 set smarttab                    " Be smart using tabs ;)
 set shiftwidth=4                " One tab == four spaces.
 set tabstop=4                   " One tab == four spaces.
+
 
 let mapleader=","
 "set spell check only on tex file
@@ -211,7 +214,7 @@ endfunction
 
 :inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 
-set guifont=SauceCodePro\ Nerd\ Font:h15
+set guifont=SauceCodePro\ Nerd\ Font:h18
 
 "colorscheme kanagawa
 """"""""""""""""""""""""""""""""""""""
@@ -232,6 +235,6 @@ lua require('init')
 nnoremap <C-_> <cmd>lua require("init").curr_buf() <cr>
 nnoremap <F4> :lua package.loaded.init = nil <cr>:source ~/.config/nvim/init.vim <cr>
 nnoremap <leader>ff :Telescope find_files<cr>
-
+nnoremap <leader>? :Telescope oldfiles<cr>
 
 

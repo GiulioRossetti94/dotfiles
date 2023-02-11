@@ -91,8 +91,25 @@ mappings.curr_buf = function()
     --local opt = require('telescope.themes').get_ivy({height = 10, previewer =false,winblend = 10})
     local opt = require('telescope.themes').get_dropdown({winblend=10})
     require('telescope.builtin').current_buffer_fuzzy_find(opt)
-end
+end,
+{desc = '[/] Fuzzily search in current buffer]' }
+
+vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 return mappings
+
+
+
+------------------------------------------------------------------------
+--                            VIM  setups in lua style (cfr vim.init line 64)
+------------------------------------------------------------------------
+
+--vim.o.undofile = true
 ------------------------------------------------------------------------
 --                            Old things
 ------------------------------------------------------------------------
