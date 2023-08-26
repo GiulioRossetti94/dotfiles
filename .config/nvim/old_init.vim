@@ -20,7 +20,7 @@ Plugin 'skywind3000/asyncrun.vim'   "run terminal commands in vim
 Plugin 'SirVer/ultisnips'           "code snippets  
 Plugin 'honza/vim-snippets'         "lets try these snippets firts dont need most of them
 Plugin 'lervag/vimtex'              "latex plugin
-Plugin 'numToStr/Comment'           " 'gc' to comment visual region/lines
+"Plugin 'numToStr/Comment'           " 'gc' to comment visual region/lines
 
 " Git plugins
 Plugin 'tpope/vim-fugitive' 		"fugitive, git plugin
@@ -37,8 +37,12 @@ Plugin 'hrsh7th/cmp-nvim-lsp'
 Plugin 'hrsh7th/cmp-buffer'
 Plugin 'hrsh7th/cmp-path'
 "Plugin 'hrsh7th/cmp-cmdline'
+" Completion
 Plugin 'hrsh7th/nvim-cmp'
 Plugin 'quangnguyen30192/cmp-nvim-ultisnips'
+
+Plugin 'folke/which-key.nvim'
+
 
 "neovim color plugin
 "Plugin 'rebelot/kanagawa.nvim'
@@ -223,6 +227,7 @@ set guifont=SauceCodePro\ Nerd\ Font:h18
 "lua require('basic')  "example. call lua fila and print something every time
 "it is reloaded
 lua require('init')
+"lua require('whichkey')
 
 "remap for telescope
 
