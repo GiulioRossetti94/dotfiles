@@ -61,7 +61,7 @@ packer.startup(function(use)
 	use("hrsh7th/nvim-cmp")             -- 
 	use("quangnguyen30192/cmp-nvim-ultisnips")
 	
-
+    
 
 	-- Syntax Highlighting and Colors --
 	use("vim-python/python-syntax")
@@ -70,7 +70,13 @@ packer.startup(function(use)
 	use("RRethy/nvim-base16")
 	use("kyazdani42/nvim-palenight.lua")
 
-	-- Other stuff --
+    -- Slime for REPL Julia
+    
+    use("jpalardy/vim-slime")
+
+    -- Julia support
+    use("JuliaEditorSupport/Julia-vim")
+    -- Other stuff --
 
 	if packer_bootstrap then
 		packer.sync()

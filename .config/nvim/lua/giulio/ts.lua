@@ -1,5 +1,11 @@
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+--local ok, lspkind = pcall(require, "lspkind")
+--if not ok then
+--  return
+--end
+
 ------------------------------------------------------------------------
 --                             lsp config                             --
 ------------------------------------------------------------------------
@@ -12,18 +18,56 @@ require'lspconfig'.pyright.setup{
     vim.keymap.set("n","gi", vim.lsp.buf.implementation, {buffer=0})
     vim.keymap.set("n","<space>df", vim.diagnostic.goto_next, {buffer=0})
     vim.keymap.set("n","<space>db", vim.diagnostic.goto_prev, {buffer=0})
-    vim.keymap.set("n","<space>r", vim.lsp.buf.rename, {buffer=0})
+    vim.keymap.set("n","<leader>r", vim.lsp.buf.rename, {buffer=0})
+    vim.keymap.set("n","<leader>dl", "<cmd>Telescope diagnostic<cr>", {buffer=0}) 
     end,
 }
 
 vim.opt.completeopt={"menu","menuone","noselect"}
-  local cmp = require'cmp'
+
+-- julia lsp
+local REVISE_LANGUAGESERVER = false
+require'lspconfig'.julials.setup({
+    on_new_config = function(new_config, _)
+        local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
+        if REVISE_LANGUAGESERVER then
+            new_config.cmd[5] = (new_config.cmd[5]):gsub("using LanguageServer", "using Revise; using LanguageServer; if isdefined(LanguageServer, :USE_REVISE); LanguageServer.USE_REVISE[] = true; end")
+        elseif require'lspconfig'.util.path.is_file(julia) then
+            new_config.cmd[1] = julia
+        end
+    vim.keymap.set("n","K", vim.lsp.buf.hover, {buffer=0})
+    vim.keymap.set("n","gd", vim.lsp.buf.definition, {buffer=0})
+    vim.keymap.set("n","gi", vim.lsp.buf.implementation, {buffer=0})
+    vim.keymap.set("n","<space>df", vim.diagnostic.goto_next, {buffer=0})
+    vim.keymap.set("n","<space>db", vim.diagnostic.goto_prev, {buffer=0})
+    vim.keymap.set("n","<leader>r", vim.lsp.buf.rename, {buffer=0})
+    vim.keymap.set("n","<leader>dl", "<cmd>Telescope diagnostic<cr>", {buffer=0})
+    end,
+    -- This just adds dirname(fname) as a fallback (see nvim-lspconfig#1768).
+    root_dir = function(fname)
+        local util = require'lspconfig.util'
+        return util.root_pattern 'Project.toml'(fname) or util.find_git_ancestor(fname) or
+               util.path.dirname(fname)
+    end,
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        -- Disable automatic formatexpr since the LS.jl formatter isn't so nice.
+        vim.bo[bufnr].formatexpr = ''
+    end,
+    capabilities = capabilities,
+})
+------------------------------------------------------------------------
+--                             cmp config: completion                             --
+------------------------------------------------------------------------
+
+local cmp = require'cmp'
   cmp.setup({
     snippet = {
       expand = function(args)
         vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
       end,
     },
+
     mapping = {
       ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
@@ -35,13 +79,29 @@ vim.opt.completeopt={"menu","menuone","noselect"}
       }),
       ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     },
-    sources = cmp.config.sources({
+
+ -- formatting: to give sources from where the suggestion is coming from
+--   formatting = {
+--   format = lspkind.cmp_format {
+--       with_text = true,
+--       menu = {
+--           buffer = "[buf]",
+--           nvim_lsp = "[LSP]",
+--           path = "[path]",
+--           ultisnips = "[snip]",
+--       },
+-- },
+--   },
+--
+    sources = cmp.config.sources({  -- here we are giving the sources for autocompletion - order is importance
       { name = 'nvim_lsp' },
       { name = 'ultisnips' }, -- For ultisnips users.
-    }, {
-      { name = 'buffer' },
-    })
-  })
+	}, {
+    { name = "path" },
+    { name = "buffer", keyword_length = 5 },
+  }, {
+    { name = "gh_issues" },
+  }),  })
 
   -- Set configuration for specific filetype.
   cmp.setup.filetype('gitcommit', {
@@ -67,7 +127,31 @@ vim.opt.completeopt={"menu","menuone","noselect"}
       { name = 'cmdline' }
     })
   })
-
+--  --
+ --LSP julia in init.lua
+--local REVISE_LANGUAGESERVER = false
+--require'lspconfig'.julials.setup({
+--    on_new_config = function(new_config, _)
+--        local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
+--        if REVISE_LANGUAGESERVER then
+--            new_config.cmd[5] = (new_config.cmd[5]):gsub("using LanguageServer", "using Revise; using LanguageServer; if isdefined(LanguageServer, :USE_REVISE); LanguageServer.USE_REVISE[] = true; end")
+--        elseif require'lspconfig'.util.path.is_file(julia) then
+--            new_config.cmd[1] = julia
+--        end
+--    end,
+--    -- This just adds dirname(fname) as a fallback (see nvim-lspconfig#1768).
+--    root_dir = function(fname)
+--        local util = require'lspconfig.util'
+--        return util.root_pattern 'Project.toml'(fname) or util.find_git_ancestor(fname) or
+--               util.path.dirname(fname)
+--    end,
+--    on_attach = function(client, bufnr)
+--        on_attach(client, bufnr)
+--        -- Disable automatic formatexpr since the LS.jl formatter isn't so nice.
+--        vim.bo[bufnr].formatexpr = ''
+--    end,
+--    capabilities = capabilities,
+--})
 ------------------------------------------------------------------------
 --                          Telescope config                          --
 ------------------------------------------------------------------------

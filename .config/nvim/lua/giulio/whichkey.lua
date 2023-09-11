@@ -71,7 +71,7 @@ local setup = {
 
 local opts = {
   mode = "n", -- NORMAL mode
-  prefix = "<leader>",
+  prefix = "<leader>,",
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
   silent = true, -- use `silent` when creating keymaps
   noremap = true, -- use `noremap` when creating keymaps
@@ -103,7 +103,7 @@ local mappings = {
     l = { "<cmd>lua vim.g.cmptoggle = not vim.g.cmptoggle<CR>", "LSP"},
     p = { '<cmd>lua require("nabla").popup()<CR>', "preview symbols"},
     r = { "<cmd>VimtexErrors<CR>"           , "report errors" },
-    s = { "<cmd>e ~/.config/nvim/snippets/tex.snippets<CR>", "edit snippets"},
+    s = { "<cmd>e ~/.config/nvim/my_snippets/tex.snippets<CR>", "edit snippets"},
     u = { "<cmd>cd %:p:h<CR>"           , "update cwd" },
     -- w = { "<cmd>TermExec cmd='pandoc %:p -o %:p:r.docx'<CR>" , "word"},
     v = { "<plug>(vimtex-context-menu)"            , "vimtex menu" },
@@ -174,8 +174,8 @@ local mappings = {
     name = "TEMPLATES",
     c = { "<cmd>PackerCompile<CR>", "Compile" },
     p = { 
-      "<cmd>read ~/.config/nvim/templates/PhilPaper.tex<CR>", 
-      "PhilPaper.tex",
+      "<cmd>read ~/.config/nvim/templates/paper.tex<CR>", 
+      "R-MAIN.tex",
     },
     l = { 
       "<cmd>read ~/.config/nvim/templates/Letter.tex<CR>",
