@@ -1,4 +1,5 @@
 # alt = option in mac keyboard
+
 # Open applications:
 #cmd - return : open -a iTerm
 cmd - return : osascript ~/.config/skhd/iterm.scpt
@@ -14,10 +15,6 @@ cmd - e : yabai -m space --toggle show-desktop
 lcmd - g        : yabai -m window --toggle zoom-fullscreen
 
 # === Navigation ===
-#ctrl + alt - h : yabai -m window --focus west
-#ctrl + alt - j : yabai -m window --focus south
-#ctrl + alt - k : yabai -m window --focus north
-#ctrl + alt - l : yabai -m window --focus east
 
 cmd - h : yabai -m window --focus west
 cmd - j : yabai -m window --focus south
@@ -30,17 +27,29 @@ cmd - up : yabai -m window --focus north
 cmd - right : yabai -m window --focus east
 
 # space focus
-cmd - p : yabai -m space --focus recent
-cmd - 1 : yabai -m space --focus 1
-cmd - 2 : yabai -m space --focus 2
-cmd - 3 : yabai -m space --focus 3
-cmd - 4 : yabai -m space --focus 4
-cmd - 5 : yabai -m space --focus 5
-cmd - 6 : yabai -m space --focus 6
-cmd - 7 : yabai -m space --focus 7
-cmd - 8 : yabai -m space --focus 8
-cmd - 9 : yabai -m space --focus 9
+#cmd - p : yabai -m space --focus recent
+#cmd - 1 : yabai -m space --focus 1
+#cmd - 2 : yabai -m space --focus 2
+#cmd - 3 : yabai -m space --focus 3
+#cmd - 4 : yabai -m space --focus 4
+#cmd - 5 : yabai -m space --focus 5
+#cmd - 6 : yabai -m space --focus 6
+#cmd - 7 : yabai -m space --focus 7
+#cmd - 8 : yabai -m space --focus 8
+#cmd - 9 : yabai -m space --focus 9
+# Focus recent space
+cmd + alt - p : yabai -m space --focus recent
 
+# Focus specific spaces
+alt + cmd - 1 : yabai -m space --focus 1
+alt + cmd - 2 : yabai -m space --focus 2
+alt + cmd - 3 : yabai -m space --focus 3
+alt + cmd - 4 : yabai -m space --focus 4
+alt + cmd - 5 : yabai -m space --focus 5
+alt + cmd - 6 : yabai -m space --focus 6
+alt + cmd - 7 : yabai -m space --focus 7
+alt + cmd - 8 : yabai -m space --focus 8
+alt + cmd - 9 : yabai -m space --focus 9
 # display focus
 ctrl - 1 : yabai -m display --focus 1
 ctrl - 2 : yabai -m display --focus 2
@@ -69,8 +78,8 @@ cmd + shift - 7 : yabai -m window --space 7
 cmd + shift - 8 : yabai -m window --space 8
 
 # send window to monitor (don't follow focus)
-ctrl + shift - 1 : yabai -m window --display 1
-ctrl + shift - 2 : yabai -m window --display 2
+ctrl + shift - 1 : yabai -m window --display 1; yabai -m display 1 --focus 1
+ctrl + shift - 2 : yabai -m window --display 2; yabai -m display 2 --focus 2
 
 # Move focus + window to space
 cmd + ctrl - m : yabai -m window --space last; yabai -m space --focus last
@@ -80,16 +89,12 @@ cmd + ctrl - 1 : yabai -m window --space 1; yabai -m space --focus 1
 cmd + ctrl - 2 : yabai -m window --space 2; yabai -m space --focus 2
 cmd + ctrl - 3 : yabai -m window --space 3; yabai -m space --focus 3
 cmd + ctrl - 4 : yabai -m window --space 4; yabai -m space --focus 4
-#
+
 # cycle across windows spanning multiple displays.
 lalt + shift - m : yabai -m query --windows \
     | jq -sr 'add | map(select(.["is-visible"] == true))' \
     | jq -sre 'add |  sort_by(.display, .frame.x, .frame.y, .id) | reverse | nth(index(map(select(.["has-focus"] == true))) - 1).id' \
     | xargs -I{} yabai -m window --focus {}
-#ctrl + shift + alt - h : yabai -m window --warp west
-#ctrl + shift + alt - j : yabai -m window --warp south
-#ctrl + shift + alt - k : yabai -m window --warp north
-#ctrl + shift + alt - l : yabai -m window --warp east
 
 # Rotate windows clockwise and anticlockwise
 alt - r         : yabai -m space --rotate 270
@@ -97,16 +102,6 @@ shift + alt - r : yabai -m space --rotate 90
 # Rotate on X and Y Axis
 shift + alt - x : yabai -m space --mirror x-axis
 shift + alt - y : yabai -m space --mirror y-axis
-
-# Float / Unfloat window
-#shift + alt - space : \
-#    yabai -m window --toggle float; \
-
-# Restart Yabai SKHD
-#kalt + shift - r : \
-#    launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"; \
-#    skhd --reload
-
 
 # change layout of desktop
 alt - e : yabai -m space --layout bsp
@@ -129,20 +124,15 @@ alt + cmd - n : yabai -m space --create && yabai -m space --focus last; \
                     sketchybar --update
 
 # create desktop and move window
-alt + cmd - m : yabai -m space --create && yabai -m window --space last && yabai -m space --focus last; \
+alt + cmd - m : yabai -m space --create && yabai -m window --space next && yabai -m space --focus next; \
                     sketchybar --update
 
+# create desktop when multiple display
+#shift + cmd - n : yabai -m space --create && \
+#                   index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
+#                   yabai -m window --space "${index}" && \
+#                   yabai -m space --focus "${index}"
 # destroy desktop
 alt + cmd - w : yabai -m space --destroy
 
-# create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
-#alt + cmd - n : yabai -m space --create && \
-                   #index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-                   #yabai -m window --space "${index}" && \
-                   #yabai -m space --focus "${index}" && echo $index
-
-# create desktop and follow focus - uses jq for parsing json (brew install jq)
-#alt + cmd - n : yabai -m space --create && \
-#                 index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-#                 yabai -m space --focus "${index}"
 
