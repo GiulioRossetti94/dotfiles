@@ -23,3 +23,6 @@ source ~/.functions
 for file in ~/.{functions}; do
     [ -r "$file" ] && source "$file"
 done
+
+
+#

@@ -32,6 +32,7 @@ alias color='colorscript.sh random'
 alias bib="cd /Users/giulio/Dropbox/bibmaster" # go to bib master folder in dropbox
 alias cbib="nvim /Users/giulio/Dropbox/bibmaster/mybibfile.bib" # modify bibmaster file
 alias OO="cd /Users/giulio/Phd/GiuliosVault"  # go to obsidian vault
+alias nvconf="cd /Users/giulio/.config/nvim/"
 # bare git repo alias for dotfiles
 alias config='/usr/bin/git --git-dir=/Users/giulio/dotfiles/ --work-tree=/Users/giulio'
 
@@ -80,3 +81,18 @@ colorscript.sh random
 
 
 alias luamake=/Users/giulio/tools/lua-language-server/3rd/luamake/luamake
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/Users/giulio/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/Users/giulio/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<
